@@ -9,5 +9,11 @@
         <module name="RSA" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="8" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="RSA" options="-bootclasspath $APPLICATION_HOME_DIR$/jre64/lib/resources.jar:$APPLICATION_HOME_DIR$/jre64/lib/rt.jar:$APPLICATION_HOME_DIR$/jre64/lib/sunrsasign.jar:$APPLICATION_HOME_DIR$/jre64/lib/jsse.jar:$APPLICATION_HOME_DIR$/jre64/lib/jce.jar:$APPLICATION_HOME_DIR$/jre64/lib/charsets.jar:$APPLICATION_HOME_DIR$/jre64/lib/jfr.jar:$APPLICATION_HOME_DIR$/jre64/classes:/usr/lib/jvm/java-8-oracle/jre/lib/jfxrt.jar" />
+    </option>
   </component>
 </project>
