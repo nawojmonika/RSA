@@ -19,4 +19,18 @@ public class EncryptionTest {
         String expectedCryptedText = "EIkL2Ts6e3pDFM2LK0tU9ramgJEbyRMQcqA4LFAffeUgK69dxBt/2bGKdPgma7Aw+5h7L3l5uWf9jXrR/uJcZA==";
         assertEquals(encrypt(message, privateKey) ,expectedCryptedText);
     }
+
+    @org.testng.annotations.Test
+    public void simpleCharEncryptionTest() {
+        Encryption e = new Encryption();
+
+        assertEquals(e.calculateCypher('P'), (char)75);
+    }
+
+    @org.testng.annotations.Test
+    public void simpleCharDecryptionTest() {
+        Encryption e = new Encryption();
+
+        assertEquals(e.calculateDecrypted((char)75, 23, 187), 'P');
+    }
 }
