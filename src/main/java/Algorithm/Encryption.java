@@ -1,52 +1,56 @@
 package Algorithm;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+
 public class Encryption {
-    private int p = 11;
-    private int q = 17;
-    public static String encrypt(String message, String key) {
+    /*
+    private static int p = 173;
+    private static int q = 149;
+    private static int e = 3;
+    private static int pq = p * q;
+    private static int publicKey = (p - 1)*(q -1);
+    private static int d = MathUtils.MultiplicativeInverse(e, publicKey);
 
-        return "";
-    }
-
-    public int getPrivateKey() {
-        return getP() * getQ();
-    }
-
-    public int getEulerValueFromPandQ() {
-        return (getP() - 1) * (getQ() - 1);
-    }
-
-    public int calculateRelativelyPrime() {
-        return 7; // this is from example, needs to be calculated
-    }
-
-    public char calculateCypher(char character) {
-        int charAsciiValue = (int)character;
-        return (char)modPow(charAsciiValue, calculateRelativelyPrime(), getPrivateKey());
-    }
-
-    public char calculateDecrypted(char character, int decryptionKey, int privateKey) {
-        int charAsciiValue = (int)character;
-        return (char)modPow(charAsciiValue, decryptionKey, privateKey);
-    }
-
-    public int modPow(int value, int exponent, int moduloTo) {
-        int encryptedCharAsciiValue = 1;
-        for (int e = 1 ; e <= exponent ; e++) {
-            encryptedCharAsciiValue = (encryptedCharAsciiValue * value) % moduloTo;
+    public static String encrypt(String message) {
+        String cryptedMessage = "";
+        for (int i = 0; i < message.length(); i++) {
+            cryptedMessage += MathUtils.modPow((int)message.charAt(i), e, pq) + " ";
         }
-        return encryptedCharAsciiValue;
+
+        return cryptedMessage;
     }
 
-    public int getDecryptionKey() {
-        return 26; // Add calculation for that
+    public static String decrypt(String message) {
+        String decryptedMessage = "";
+        System.out.println(publicKey);
+        System.out.println(d);
+        for (String m : message.split("\\s")) {
+            decryptedMessage += MathUtils.modPow(Integer.parseInt(m), d, pq) + " ";
+        };
+
+        return decryptedMessage;
     }
 
-    public int getP() {
-        return p;
-    }
 
-    public int getQ() {
-        return q;
+
+    public static ArrayList<Integer> splitMessageToIntChunks(String message) {
+        String[] dividedMessage = message.split("(?<=\\G.{3})");
+
+        ArrayList<Integer> dividedMessagesInInt = new ArrayList<>();
+
+        for (String m : dividedMessage) {
+            int valueOfDividedMessage = 0;
+            int charIndex = 0;
+            for (int power = m.length() - 1; power >= 0 ; power--, charIndex++) {
+                valueOfDividedMessage += (int)m.charAt(charIndex) * Math.pow(27, power);
+            }
+            dividedMessagesInInt.add(valueOfDividedMessage);
+        }
+
+        return dividedMessagesInInt;
     }
+    */
+
 }
