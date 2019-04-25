@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox id="vbox" prefHeight="400" prefWidth="800" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.ProgramWindow">
+    <MenuBar fx:id="menuBar">
+        <menus>
+            <Menu text="File">
+                <items>
+                    <MenuItem onAction="#handleEncrypt" text="Encrypt" />
+                    <MenuItem onAction="#handleDecrypt" text="Decrypt" />
+                </items>
+            </Menu>
+            <Menu text="Window">
+                <items>
+                    <MenuItem onAction="#handleEncryptFromWindow" text="Encrypt from window" />
+                    <MenuItem onAction="#handleDecryptFromWindow" text="Decrypt from window" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+   <Label text="Text to encrypt" />
+   <TextArea fx:id="textToEncrypt" prefHeight="200.0" prefWidth="200.0" />
+   <Label text="Decrypted text" />
+   <TextArea fx:id="textToDecrypt" prefHeight="200.0" prefWidth="200.0" />
+</VBox>

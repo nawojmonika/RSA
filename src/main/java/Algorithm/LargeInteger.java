@@ -12,49 +12,22 @@ public class LargeInteger {
 
 	private byte[] val;
 
-	/**
-	 * Construct the LargeInteger from a given byte array
-	 *
-	 * @param b the byte array that this LargeInteger should represent
-	 */
 	public LargeInteger(byte[] b) {
 		val = b;
 	}
 
-	/**
-	 * Construct the LargeInteger by generating a random n-bit number that is
-	 * probably prime (2^-100 chance of being composite).
-	 *
-	 * @param n   the bitlength of the requested integer
-	 * @param rnd instance of java.util.Random to use in prime generation
-	 */
 	public LargeInteger(int n, Random rnd) {
 		val = BigInteger.probablePrime(n, rnd).toByteArray();
 	}
 
-	/**
-	 * Return this LargeInteger's val
-	 *
-	 * @return val
-	 */
 	public byte[] getVal() {
 		return val;
 	}
 
-	/**
-	 * Return the number of bytes in val
-	 *
-	 * @return length of the val byte array
-	 */
 	public int length() {
 		return val.length;
 	}
 
-	/**
-	 * Add a new byte as the most significant in this
-	 *
-	 * @param extension the byte to place as most significant
-	 */
 	public void extend(byte extension) {
 		byte[] newv = new byte[val.length + 1];
 		newv[0] = extension;
@@ -64,21 +37,10 @@ public class LargeInteger {
 		val = newv;
 	}
 
-	/**
-	 * If this is negative, most significant bit will be 1 meaning most
-	 * significant byte will be a negative signed number
-	 *
-	 * @return true if this is negative, false if positive
-	 */
 	public boolean isNegative() {
 		return (val[0] < 0);
 	}
 
-	/**
-	 * Computes the sum of this and other
-	 *
-	 * @param other the other LargeInteger to sum with this
-	 */
 	public LargeInteger add(LargeInteger other) {
 		byte[] a, b;
 		// If operands are of different sizes, put larger first ...
@@ -137,30 +99,19 @@ public class LargeInteger {
 				res_li.extend((byte) carry);
 			}
 		}
-		// Magnitude could also increase if both operands are negative
 		else if (this.isNegative() && other.isNegative()) {
 			if (!res_li.isNegative()) {
 				res_li.extend((byte) 0xFF);
 			}
 		}
 
-		// Note that result will always be the same size as biggest input
-		//  (e.g., -127 + 128 will use 2 bytes to store the result value 1)
 		return res_li;
 	}
 
-	/**
-	 * Negate val using two's complement representation
-	 *
-	 * @return negation of this
-	 */
 	public LargeInteger negate() {
 		byte[] neg = new byte[val.length];
 		int offset = 0;
 
-		// Check to ensure we can represent negation in same length
-		//  (e.g., -128 can be represented in 8 bits using two's
-		//  complement, +128 requires 9)
 		if (val[0] == (byte) 0x80) { // 0x80 is 10000000
 			boolean needs_ex = true;
 			for (int i = 1; i < val.length; i++) {
@@ -169,7 +120,6 @@ public class LargeInteger {
 					break;
 				}
 			}
-			// if first byte is 0x80 and all others are 0, must extend
 			if (needs_ex) {
 				neg = new byte[val.length + 1];
 				neg[0] = (byte) 0;
@@ -177,23 +127,15 @@ public class LargeInteger {
 			}
 		}
 
-		// flip all bits
 		for (int i = 0; i < val.length; i++) {
 			neg[i + offset] = (byte) ~val[i];
 		}
 
 		LargeInteger neg_li = new LargeInteger(neg);
 
-		// add 1 to complete two's complement negation
 		return neg_li.add(new LargeInteger(ONE));
 	}
 
-	/**
-	 * Implement subtraction as simply negation and addition
-	 *
-	 * @param other LargeInteger to subtract from this
-	 * @return difference of this and other
-	 */
 	public LargeInteger subtract(LargeInteger other) {
 		return this.add(other.negate());
 	}
@@ -355,17 +297,6 @@ public class LargeInteger {
 			}
 			return result;
 		}
-	}
-
-	public LargeInteger resize() {
-		byte[] resize = val;
-		while (resize.length > 64) {
-			byte[] temp = new byte[this.length() - 1];
-			for (int i = 1; i <= temp.length; i++)
-				temp[i - 1] = resize[i];
-			resize = temp;
-		}
-		return new LargeInteger(resize);
 	}
 
 	public LargeInteger fit(LargeInteger other) {
